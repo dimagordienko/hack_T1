@@ -15,6 +15,7 @@
 The main goal is to distribute clients between different clinics in the city in order to **minimize travel time** from home to the clinic.
 
 **Input:** coordinates of clients
+
 **Output:** coordinates of 250 clinics that are optimally placed in the city
 
 ---
