@@ -77,6 +77,7 @@ I calculated the following metrics:
 * **LCS** — 42.393325
 
 **Total score** — 2328
+
 **Leaderboard** — 3rd place
 
 ---
