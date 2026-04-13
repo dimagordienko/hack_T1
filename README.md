@@ -5,7 +5,8 @@
 ## TOPIC — Optimization of Clinic Placement in the City of Seversk
 
 **Team:** Suetolog
-**Member:** Dmitry Gordienko
+
+**Member:** Dmitrii Gordienko
 
 ---
 
