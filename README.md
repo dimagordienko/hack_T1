@@ -58,6 +58,7 @@ The solution is mostly **algebraic**, but it is also possible to solve this task
 <img width="618" height="478" alt="Снимок экрана 2025-12-22 в 23 12 20" src="https://github.com/user-attachments/assets/2770405b-8de5-45ce-be55-e6cd0499a1d9" />
 
 After performing clustering, I calculated the centroids for each cluster. For better visualization, I displayed them as coordinates:
+
 <img width="600" height="479" alt="Снимок экрана 2025-12-22 в 23 13 50" src="https://github.com/user-attachments/assets/611d7c8f-681c-425d-943e-b494662da31c" />
 
 This way, I got my first and simplest result! I decided not to stop there, saved the file, and moved on to implementing metrics to evaluate the solution.
