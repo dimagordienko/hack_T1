@@ -1,101 +1,131 @@
-# T1 Hackaton
+# T1 Hackathon
 
-# Самое легкое решение на хакатоне!
+# The Easiest Solution at the Hackathon!
 
-## ТЕМА - Оптимизация размещения клиник в городе Северск
-Команда: Suetolog      
-Состав: Гордиенко Дмитрий
+## TOPIC — Optimization of Clinic Placement in the City of Seversk
 
-### Описание задачи:
-Основная задача является разспределением клиентов по разным клиникам в городе, чтобы минимизировать время пути от дома до клиники
-На вход даются координаты клиентов и на выход нужно получить координаты 250 клиник, которые оптимально расположены в городе
+**Team:** Suetolog
+**Member:** Dmitry Gordienko
 
-Существуют внутринние **метрики** для оценки качества решения:
-1) Суммарное время в пути для всех клиентов (Total Travel Time)
-2) Перегрузка клиник (Clinics Overload)
-3) Средняя оценка удобности расположения (Location Convenience Score)
+---
 
+## Task Description:
 
-#### В предложенном датасете существуют **фичи**:
+The main goal is to distribute clients between different clinics in the city in order to **minimize travel time** from home to the clinic.
 
-Фича №1: Количество жителей района вокруг потенциального места расположения клиники (density_area)
+**Input:** coordinates of clients
+**Output:** coordinates of 250 clinics that are optimally placed in the city
 
-Фича №2: Удаленность от существующих клиник (clinick_distance)
+---
 
-Фича №3: Возрастная структура населения (client_age)
+## Evaluation Metrics:
 
-Фича №4: Расстояние до ближайшего парка или зелёной зоны (park_distance)
+There are internal **metrics** to evaluate the solution quality:
 
-Фича №5: Концентрация социально уязвимых групп (vulnerable_group_density)
+1. **Total Travel Time** — total time spent by all clients
+2. **Clinics Overload** — how overloaded the clinics are
+3. **Location Convenience Score** — average convenience rating of clinic locations
 
-Фича №6: Социальная инфраструктура (social_infrastructure_rating)
+---
 
+## Dataset Features:
 
-Каждая фича способна изменить расположение клиники и влияет на результат
+The dataset includes the following **features**:
 
+* **Feature 1:** Population density around a possible clinic location (`density_area`)
+* **Feature 2:** Distance to existing clinics (`clinic_distance`)
+* **Feature 3:** Age distribution of clients (`client_age`)
+* **Feature 4:** Distance to the nearest park or green area (`park_distance`)
+* **Feature 5:** Density of socially vulnerable groups (`vulnerable_group_density`)
+* **Feature 6:** Social infrastructure rating (`social_infrastructure_rating`)
 
+Each feature can influence clinic placement and affect the final result.
 
-### Решение:
+---
 
-Лично было трудно понять с чего стоит начать и за что зацепиться, но решил пойти с самого начала и самым простым методом K-средних расположить клиники и потом немного попровлять их местоположение.
+## Solution:
 
-Решение выходит Алгеброическое, но есть возомжность решить задачу путем создания модели
+At first, it was difficult to understand where to start. I decided to begin with a simple approach — using the **K-means algorithm** to place clinics, and then slightly adjust their positions.
 
-Свежий взгляд на данные:
+The solution is mostly **algebraic**, but it is also possible to solve this task by building a machine learning model.
+
+---
+
+## Fresh Look at the Data:
 
 <img width="618" height="478" alt="Снимок экрана 2025-12-22 в 23 12 20" src="https://github.com/user-attachments/assets/2770405b-8de5-45ce-be55-e6cd0499a1d9" />
 
-После выполнения кластеризации приступил к вычисление центроид для каждого кластера, для наглядности вывел в координатах:
+After performing clustering, I calculated the centroids for each cluster. For better visualization, I displayed them as coordinates:
 <img width="600" height="479" alt="Снимок экрана 2025-12-22 в 23 13 50" src="https://github.com/user-attachments/assets/611d7c8f-681c-425d-943e-b494662da31c" />
 
-Таким образом получил свой самый первый и легкий результат! Решил не останавливаться, сохранил файл и приступил к реализации метрик для оценки результата.
+This way, I got my first and simplest result! I decided not to stop there, saved the file, and moved on to implementing metrics to evaluate the solution.
 
-Осуществим метрики и получил: 
-1) Суммарное время в пути для всех клиентов (Total Travel Time)
-2) Перегрузка клиник (Clinics Overload)
-3) Средняя оценка удобности расположения (Location Convenience Score)
+I calculated the following metrics:
 
-### **Первые результаты** по метрикам вышли:
-TTT - 2374.98
-CO - 0
-LCS - 42.393325
+1. **Total Travel Time (TTT)**
+2. **Clinics Overload (CO)**
+3. **Location Convenience Score (LCS)**
 
-Total score - 2328
+---
 
-Leaderbord - 3d place
+## First Results:
 
-### Этап 2
-На следующий день решил улучшать решение. 
-Первым шагом было изменение обычного k-среднего на медианы, чтобы избежать выброски данных. (mediana_same_ttt.ipynb)
+* **TTT** — 2374.98
+* **CO** — 0
+* **LCS** — 42.393325
 
-Вторая мысль - разделение данных на 2 больших кластера(можно их заметить на карте), а после использовать метод kmeans вручную. (two_clasters_2356.ipynb)
+**Total score** — 2328
+**Leaderboard** — 3rd place
 
-Дополнения звучат хорошо и можно подумать, что они принесли небольшой успех, но нет. Улучшения не дали никаких улучшений и пришлось оставить как было раньше, чтобы не усложнять код
+---
 
-Далее поразмышляв я заметил, что итоговая оценка у меня меняется, при каждом прогоне кода выходит новый результат. Просмотрев код я понял, что не указал random_state в методе kmeans.
+## Stage 2
 
-И вот тут пришла новая идея:
- - если оценка у решения получается каждый раз разная и я могу указать определеный "сид" в random_state, то я могу попробовать несколько вариантов с разным random_state:
- - следовательно можно перебрать несколько сидов и получать разный результат, а после выбрать самый лучший из существующих. Так появился файл broutforcer.ipynb. Я поставил цикл на 7 часов ночью и утром посмотрел что вышло.
-Результат от этого метода был и он вышел на 11 пунктов ниже, чем был. TTT вышел 2344
+The next day, I decided to improve the solution.
 
-Паралельно с этим методом можно было проверять другие мысли, чем я и стал заниматься
+The first step was to replace standard K-means with a median-based approach to reduce the impact of outliers (`mediana_same_ttt.ipynb`).
 
-### Этап 3 (move_impovment.py)
-Прошелся по каждой клинике - попытался сдвиуть на N в сторону - пересчитал метрики - получил результат
+The second idea was to split the data into two large clusters (you can see them on the map), and then apply K-means manually (`two_clasters_2356.ipynb`).
 
-Если результат не устраивает, то N = N/2
+These ideas sounded promising, and I expected some improvement. However, they did not give any better results, so I decided to keep the original solution to avoid making the code more complex.
 
-Все просто!
-В итоге получил небольшое улучшение по Главной метрике ТТТ
+Later, I noticed that my final score changed every time I ran the code. After checking the code, I realized that I did not set `random_state` in the K-means method.
 
-### Итоги
-У меня получились такие метрики:
+This led to a new idea:
 
-TTT - 2335.55
+* If the result changes every time, and I can control it using `random_state`,
+* then I can try multiple seeds and compare results,
+* and finally choose the best one.
 
-CO - 0
+This is how the file `broutforcer.ipynb` appeared. I ran it overnight for about 7 hours and checked the results in the morning.
 
-LCS - 42.38
+This method worked — the result improved by 11 points. The new **TTT** was **2344**.
 
-Все файлы работы прикреплены!
+At the same time, I continued testing other ideas.
+
+---
+
+## Stage 3 (`move_impovment.py`)
+
+I iterated over each clinic and tried to slightly move its position:
+
+* shift the clinic by **N** units
+* recalculate the metrics
+* check the result
+
+If the result was worse, then reduce the step:
+**N = N / 2**
+
+Simple but effective.
+
+In the end, I got a small improvement in the main metric (**TTT**).
+
+---
+
+## Final Results:
+
+* **TTT** — 2335.55
+* **CO** — 0
+* **LCS** — 42.38
+
+All project files are attached!
